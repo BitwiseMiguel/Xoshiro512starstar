@@ -60,6 +60,20 @@ public:
      */
     int64_t getInt64(const int64_t &min, const int64_t &max);
 
+    /**
+     * @brief Method to generate a random uniform number in the range [0, 1).
+     * @return A random uniform number.
+     */
+    double getDouble();
+
+    /**
+     * @brief Method to generate a random uniform number within a specified range [min, max).
+     * @param min The minimum value of the range.
+     * @param max The maximum value of the range.
+     * @return A random uniform number within the specified range.
+     */
+    double getDouble(const double &min, const double &max);
+
 };
 
 #endif

@@ -35,7 +35,6 @@ void Xoshiro512::setSeed(uint64_t seed) {
     }
 };
 
-
 // Left rotation function
 inline uint64_t Xoshiro512::rotl(const uint64_t &x, const int &k) {
     return (x << k) | (x >> (64 - k));
@@ -135,4 +134,21 @@ int64_t Xoshiro512::getInt64(const int64_t &min, const int64_t &max) {
 
     // Return the generated random number within the specified range
     return min + static_cast<int64_t>(random);
+};
+
+// Method to generate a random uniform number in the range [0, 1) as a double
+double Xoshiro512::getDouble() {
+    return (getUint64() >> 11) * 0x1.0p-53;
+};
+
+// Method to generate a random uniform number within a specified range [min, max) as a double
+double Xoshiro512::getDouble(const double &min, const double &max) {
+    #ifdef DEBUG
+    // Check if the minimum value is greater than the maximum value
+    assertLogic(min <= max, "The minimum value is greater than the maximum value.");
+    #endif
+    
+    double floating_point_0_1 = getDouble();
+
+    return min + (max - min) * floating_point_0_1;
 };
