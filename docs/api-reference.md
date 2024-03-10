@@ -74,7 +74,7 @@ For more details about the Xoshiro512starstar algorithm, refer to [Xoshiro512sta
 ## Usage Example
 
 ```cpp
-#include "Xoshiro512.hpp"
+#include "Xoshiro512starstar.hpp"
 
 int main() {
     Xoshiro512 prng;
