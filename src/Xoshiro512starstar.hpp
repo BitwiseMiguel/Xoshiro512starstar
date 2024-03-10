@@ -2,6 +2,7 @@
 #define XOSHIRO512STARSTAR_HPP
 
 #include <chrono>
+#include <math.h>
 
 /**
  * @brief Class Xoshiro512 implements a pseudo-random number generator using the Xoshiro512starstar algorithm.
@@ -11,6 +12,9 @@ class Xoshiro512 {
 private:
     static bool is_inicialized; // Flag to indicate if the generator has been initialized
     static uint64_t state[8]; // Array to store the internal state of the generator
+
+    static bool is_random_normal_saved; // Flag to check if a normal distribution value is saved
+    static double random_normal_value; // Saved normal distribution value
 
     static inline uint64_t rotl(const uint64_t &x, const int &k); // Left rotation function
 
@@ -73,6 +77,15 @@ public:
      * @return A random uniform number within the specified range.
      */
     double getDouble(const double &min, const double &max);
+
+    
+    /**
+     * @brief Method to generate a random number with a normal distribution with specified mean and standard deviation.
+     * @param mean The mean value of the normal distribution (default: 0.0).
+     * @param std_dev The standard deviation of the normal distribution (default: 1.0).
+     * @return A random number with a normal distribution.
+     */
+    double getGaussian(const double &mean = 0.0, const double &std_dev = 1.0);
 
 };
 

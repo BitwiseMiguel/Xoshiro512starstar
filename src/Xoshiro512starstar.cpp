@@ -4,6 +4,9 @@
 /*static*/ bool Xoshiro512::is_inicialized{false};
 /*static*/ uint64_t Xoshiro512::state[8];
 
+/*static*/ bool Xoshiro512::is_random_normal_saved{false};
+/*static*/ double Xoshiro512::random_normal_value;
+
 // Default constructor for the Xoshiro512 class
 Xoshiro512::Xoshiro512() {
     if (is_inicialized) return;
@@ -33,6 +36,8 @@ void Xoshiro512::setSeed(uint64_t seed) {
         z = (z ^ (z >> 27)) * 0x94d049bb133111eb;
         state[i] = z ^ (z >> 31);
     }
+  
+    is_random_normal_saved = false;
 };
 
 // Left rotation function
@@ -152,3 +157,28 @@ double Xoshiro512::getDouble(const double &min, const double &max) {
 
     return min + (max - min) * floating_point_0_1;
 };
+
+// Method to generate a random number with a normal distribution with specified mean and standard deviation
+double Xoshiro512::getGaussian(const double &mean, const double &std_dev) {
+    #ifdef DEBUG
+    // Check if the standard deviation is positive
+    assertLogic(std_dev > 0.0, "The standard deviation value must be greater than 0.0.");
+    #endif
+    
+    if (is_random_normal_saved) {
+        is_random_normal_saved = false;
+        return mean + random_normal_value * std_dev;
+    }
+
+    double u = getDouble(-1.0, 1.0);
+    double v = getDouble(-1.0, 1.0);
+    double r = u * u + v * v;
+    
+    if (r == 0.0 || r > 1.0) return getGaussian(mean, std_dev);
+
+    double q = sqrt(-2 * log(r) / r);
+    random_normal_value = v * q;
+    is_random_normal_saved = true;
+
+    return mean + u * q * std_dev;
+}
