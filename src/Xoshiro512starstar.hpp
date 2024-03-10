@@ -46,6 +46,20 @@ public:
      */
     uint64_t getUint64(const uint64_t &min, const uint64_t &max);
 
+    /**
+     * @brief Method to generate a random 64-bit signed integer uniformly distributed in the range INT64_MIN to INT64_MAX.
+     * @return A random 64-bit signed integer.
+     */
+    int64_t getInt64();
+
+    /**
+     * @brief Method to generate a random 64-bit signed integer within a specified range.
+     * @param min The minimum bound of the range.
+     * @param max The maximum bound of the range.
+     * @return A random 64-bit signed integer within the specified range.
+     */
+    int64_t getInt64(const int64_t &min, const int64_t &max);
+
 };
 
 #endif

@@ -93,3 +93,46 @@ uint64_t Xoshiro512::getUint64(const uint64_t &min, const uint64_t &max) {
     // Return the generated random number within the specified range
     return min + random % range;
 };
+
+// Method to generate a random 64-bit signed integer
+int64_t Xoshiro512::getInt64() {
+	return static_cast<int64_t>(getUint64());
+};
+
+// Method to generate a random 64-bit signed integer within a specified range
+int64_t Xoshiro512::getInt64(const int64_t &min, const int64_t &max) {
+    #ifdef DEBUG
+    // Check if the minimum value is lesser than the maximum value
+    assertLogic(min <= max, "The minimum value is greater than the maximum value.");
+    #endif
+    
+    // Generate a random number using the uniform distribution
+    auto random = getUint64();
+    
+    // Check if the range is the entire range of uint64_t
+    if (min == INT64_MIN && max == INT64_MAX) {
+        return static_cast<int64_t>(random);
+    }
+
+    // Calculate the range of the random number
+    auto range = static_cast<uint64_t>(max - min) + 1ULL;
+
+    // Calculate the remainder range
+    auto remainder_range = ((UINT64_MAX % range) + 1ULL) % range;
+
+    // Generate a new random number if it falls within the remainder range
+    while (random < remainder_range) {
+        random = getInt64();
+    }
+    
+    // Calculate the random value in the specified range
+    random %= range;
+    
+    if (random > INT64_MAX) {
+        // Return the generated random number within the specified range
+        return min + INTMAX_MAX + static_cast<int64_t>(random - INT64_MAX);
+    }
+
+    // Return the generated random number within the specified range
+    return min + static_cast<int64_t>(random);
+};
