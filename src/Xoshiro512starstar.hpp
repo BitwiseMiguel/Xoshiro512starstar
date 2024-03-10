@@ -5,7 +5,7 @@
 #include <math.h>
 
 /**
- * @brief Class Xoshiro512 implements a pseudo-random number generator using the Xoshiro512starstar algorithm.
+ * @brief Class Xoshiro512 implements a pseudo-random number generator using the Xoshiro512** algorithm.
  * See more about this algorithm in https://prng.di.unimi.it/xoshiro512starstar.c
  */
 class Xoshiro512 {
