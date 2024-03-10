@@ -12,6 +12,8 @@ private:
     static bool is_inicialized; // Flag to indicate if the generator has been initialized
     static uint64_t state[8]; // Array to store the internal state of the generator
 
+    static inline uint64_t rotl(const uint64_t &x, const int &k); // Left rotation function
+
 public:
     /**
      * @brief Default constructor for the Xoshiro512 class.
@@ -29,6 +31,20 @@ public:
      * @param seed The seed value to set.
      */
     void setSeed(uint64_t seed);
+
+    /**
+     * @brief Method to generate a random 64-bit unsigned integer uniformly distributed in the range 0 to UINT64_MAX.
+     * @return A random 64-bit unsigned integer.
+     */
+    uint64_t getUint64();
+
+    /**
+     * @brief Method to generate a random 64-bit unsigned integer within a specified range.
+     * @param min The minimum bound of the range.
+     * @param max The maximum bound of the range.
+     * @return A random 64-bit unsigned integer within the specified range.
+     */
+    uint64_t getUint64(const uint64_t &min, const uint64_t &max);
 
 };
 
